@@ -20,7 +20,7 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-This opens `http://localhost:8501` with pages on the left sidebar.
+[This opens](https://starbucksportfolioapp-67oaqbtqc77lls7gz2fvjy.streamlit.app/EDA)
 
 ## 📂 Repo Structure
 
