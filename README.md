@@ -1,146 +1,160 @@
-
 # Starbucks Drinks Nutrition — Data Science Portfolio App
 
-An end-to-end project you can run in VS Code: data cleaning, EDA, interactive Streamlit dashboard, a **Compare Two Drinks** tool, a **Healthier Alternative** recommender, plus **clustering** and a simple **category prediction** model.
+An end-to-end data science project transforming raw nutritional data into actionable consumer insights. This multi-page Streamlit application features advanced EDA, a beverage comparison engine, a "Smart Swap" recommender, and machine learning models for product segmentation and category prediction.
 
-## 🚀 Quickstart
-[![Open in Streamlit] https://starbucksportfolioapp-67oaqbtqc77lls7gz2fvjy.streamlit.app/
-```bash
-# 0) (macOS) Install Python 3 if needed
-brew install python
+---
 
-# 1) Create & activate a venv
-python3 -m venv .venv
-source .venv/bin/activate
+## 🎯 Overview
 
-# 2) Install deps
-pip install -r requirements.txt
+Starbucks offers hundreds of beverage configurations, but customers often underestimate the nutritional trade-offs—particularly regarding sugar, calories, and caffeine efficiency. One Frappuccino® can exceed the WHO’s daily recommended sugar intake in a single serving.
 
-# 3) Run the multi-page app
-streamlit run streamlit_app.py
-```
+This project uncovers these insights through an interactive dashboard, framing complex data in terms of customer health and daily choices.
 
-This opens `http://localhost:8501` with pages on the left sidebar.
+### 📖 Project Story
 
-## 📂 Repo Structure
+* **The Problem:** Navigating high-calorie "guilty pleasures" vs. "healthy habits" without losing the Starbucks experience.
+* **The Approach:** - **Cleaning:** Normalizing messy column names (e.g., `Sugars..g.`) and handling "Varies" caffeine values.
+* **EDA:** Multi-dimensional analysis using Sunburst charts, Radar profiling, and Quadrant Analysis.
+* **Engineering:** Building a "Nearest-Healthier-Neighbor" recommender lock-stepped by product category.
+* **ML:** Unsupervised Clustering (KMeans) to segment the menu and Supervised Classification (KNN) to predict beverage "DNA".
 
-```
+
+
+---
+
+## 🏗️ Repo Structure
+
+```text
 starbucks_portfolio_app/
-├─ streamlit_app.py                # Home + overview
+├─ streamlit_app.py           # Dashboard Home + Executive Summary
 ├─ pages/
-│  ├─ 1_EDA.py                     # Distributions + treemap + top caffeine
-│  ├─ 2_Compare.py                 # Compare two drinks (radar + deltas)
-│  ├─ 3_Recommender.py             # Goals + Healthier alternative finder
-│  └─ 4_Models.py                  # Clustering + category prediction
+│  ├─ 1_EDA.py                # Deep-Dive Portfolio Analysis (Sunburst, Radar, Heatmaps)
+│  ├─ 2_Compare.py            # Head-to-Head Comparison (Radar + Delta metrics)
+│  ├─ 3_Recommender.py        # "Smart Swap" Engine + Lifestyle Personas
+│  └─ 4_Models.py             # K-Means Clustering + KNN Category Prediction
 ├─ src/
-│  └─ utils.py                     # Shared data loading & helpers
+│  └─ utils.py                # Reusable data loading, cleaning & logic helpers
 ├─ data/
 │  └─ Nutrition_facts_for_Starbucks_Menu_1604_26.csv
-├─ notebooks/
-│  └─ 01_quick_audit.ipynb         # EDA skeleton (optional)
-├─ requirements.txt
-└─ README.md
+├─ requirements.txt           # Dependency management
+└─ README.md                  # Project documentation
+
 ```
 
-## ✨ Highlights
+---
 
-- **Compare Two Drinks**: side-by-side stats, radar chart, and delta bars.
-- **Healthier Alternative**: suggest a similar, lower-cal/sugar drink within same category/prep when possible.
-- **Visuals**: distributions, bubble chart, treemap, top caffeine table.
-- **Clustering**: KMeans to group drinks (light/medium/heavy-style).
-- **Prediction**: RandomForest to predict `category` from nutrition.
-- **Clean code**: shared `src/utils.py`, caching, and tidy page layout.
+## ✨ Features & Highlights
 
-## 🧪 Tips for Portfolio Polish
+### 📊 Strategic EDA (Page 1)
 
-- Add screenshots to the README.
-- Push to GitHub with a short project story (Goal → Data → Methods → Insights → Next Steps).
-- Deploy on Streamlit Community Cloud or Hugging Face Spaces and link it in your resume.
+* **Portfolio Architecture:** Sunburst visualization of calorie contribution by category.
+* **Nutritional DNA:** Radar charts comparing the "blueprint" of different beverage verticals (e.g., Espresso vs. Frappuccino).
+* **Efficiency Lab:** Identifying "Clean Buzz" leaders—high caffeine for low caloric cost.
 
-## 🛠️ Common macOS Fix
+### 🆚 Head-to-Head Comparison (Page 2)
 
-If you see `zsh: command not found: python`, use `python3` and `pip3` (and Homebrew above).
+* **Decision Support:** Side-by-side stats for any two drinks.
+* **Smart Swaps:** Visualizes the "trade-off" (e.g., choosing Option A saves 150 calories but loses 20mg of caffeine).
+* **Analyst Recommendations:** Automated text summaries based on nutritional deltas.
+
+### 💡 Smart Choice Engine (Page 3)
+
+* **Guilty Pleasure Transformer:** Enter your "usual" order to find a lighter version in the same category.
+* **Relatability Metrics:** Translates calorie savings into "Walking Minutes" (e.g., swapping saves 40 mins on the treadmill).
+* **Lifestyle Targets:** Quick-filters for Keto, Low Calorie, or High Caffeine personas.
+
+### 🧠 Predictive Analytics (Page 4)
+
+* **Market Segmentation:** K-Means clustering to group drinks into "Light", "Standard", and "Indulgent" families.
+* **Category DNA Prediction:** A K-Nearest Neighbors model that predicts the drink category based solely on nutrition.
+
+---
+
+## 🚀 Quick Start
+
+### Local Setup
+
+1. **Clone the Repository**
+```bash
+git clone <your-repo-url>
+cd starbucks_portfolio_app
+
 ```
-📖 Project Story
-❓ Problem
 
-Starbucks offers hundreds of drinks, but customers often underestimate the nutritional trade-offs — especially sugar and calories.
-For example, one Frappuccino can exceed the daily recommended sugar intake in a single serving.
-I wanted to build an end-to-end data science project that uncovers these insights, makes them interactive, and even recommends healthier alternatives.
 
-🛠️ Approach
+2. **Create and Activate Virtual Environment**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+# .venv\Scripts\activate  # Windows
 
-Data Cleaning & Understanding
+```
 
-Normalized messy nutrition column names.
 
-Checked for missing values and converted nutrition fields to numeric.
+3. **Install Dependencies**
+```bash
+pip install -r requirements.txt
 
-Grouped drinks by categories (Frappuccino, Latte, Tea, Refresher, etc.).
+```
 
-Exploratory Data Analysis (EDA)
 
-Visualized distributions of calories, sugar, and caffeine.
+4. **Run the App**
+```bash
+streamlit run streamlit_app.py
 
-Correlation heatmap between nutrition metrics (sugar, fat, caffeine, etc.).
+```
 
-Identified "sugar bombs" — drinks with highest sugar per serving.
 
-Scatterplot of calories vs caffeine (are high-energy drinks also calorie-heavy?).
 
-Interactive Dashboard (Streamlit)
+---
 
-Sidebar filters (category, prep, calories, sugar, caffeine).
+## 📈 Data Schema
 
-Goal-based filtering (e.g., under 200 calories, under 20g sugar).
+The dataset includes 242 Starbucks beverages with the following key attributes:
 
-KPIs for quick summary stats.
+| Column | Type | Description |
+| --- | --- | --- |
+| `beverage_category` | String | Product segment (e.g., Classic Espresso) |
+| `beverage` | String | Specific drink name |
+| `prep` | String | Milk type and size configuration |
+| `calories` | Integer | Total caloric energy |
+| `sugar_g` | Float | Grams of sugar |
+| `caffeine_mg` | Float | Milligrams of caffeine |
+| `fat_g` | Float | Total fat content |
+| `nutrient_score` | Float | Engineered metric based on DV (Vitamin A/C, Iron, Calcium) |
 
-Side-by-side Compare Two Drinks tool with radar + bar charts.
+---
 
-Healthier Alternative Finder — suggests lighter swaps.
+## 💡 Key Insights
 
-Machine Learning Add-ons
+* **The Sugar Trap:** Over 40% of the menu exceeds the WHO's recommended daily sugar limit in a single serving.
+* **Customization Lever:** Switching from Whole Milk to Nonfat Milk across the portfolio reduces intake by an average of **~40-60 calories** per SKU.
+* **Caffeine Leaders:** Brewed coffees and Cold Brews provide the highest "Caffeine Efficiency" (most buzz for the least energy cost).
 
-Clustering: grouped drinks into "light", "medium", "heavy" categories based on nutrition.
+---
 
-Prediction: trained a RandomForest model to predict drink category from nutrition profile.
+## 🤝 Contributing
 
-Feature importance analysis showed calories and sugar as top predictors.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
 
-💡 Key Insights
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Hidden Sugar: >40% of drinks exceed WHO’s daily sugar guideline in one serving.
+---
 
-Caffeine Trade-offs: Some high-caffeine drinks are surprisingly low in calories (e.g., cold brews).
+## 📝 License
 
-Healthier Swaps: Instead of Java Chip Frappuccino (440 cal, 60g sugar),
-the app recommends Iced Americano (15 cal, 0g sugar).
+Distributed under the MIT License. See `LICENSE` for more information.
 
-🚀 Impact
+## 📧 Contact
 
-This project demonstrates:
+**Emily** - [Your GitHub Profile](https://www.google.com/search?q=https://github.com/emilyxxhy)
 
-End-to-end data science workflow: cleaning → EDA → dashboard → ML.
+Project Link: [https://github.com/emilyxxhy/starbucks_portfolio_app](https://github.com/emilyxxhy/starbucks_portfolio_app)
 
-Business storytelling: framing data in terms of customer health and choices.
+---
 
-Engineering skills: building a multi-page Streamlit app with reusable src/utils.py.
-
-🔮 Next Steps
-
-Add drink pricing data to explore “cost per calorie”.
-
-Build a recommendation system for “similar but healthier” drinks.
-
-Deploy on Streamlit Community Cloud so anyone can interact with it.
-
-Export automated PDF insights for non-technical users.
-
-🧪 Tips for Portfolio Polish
-
-Add screenshots to the README.
-
-Push to GitHub with a short project story (Goal → Data → Methods → Insights → Next Steps).
-
-Deploy on Streamlit Community Cloud or Hugging Face Spaces and link it in your resume.
+*Disclaimer: This app is for portfolio purposes. Nutritional data is based on publicly available Starbucks US tables.*
