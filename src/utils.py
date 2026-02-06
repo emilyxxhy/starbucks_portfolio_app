@@ -1,7 +1,10 @@
-
 import pandas as pd
 import numpy as np
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import A4
 
+# --- 1. Các hàm xử lý dữ liệu cơ bản ---
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df.columns = (
@@ -79,3 +82,56 @@ def top_k(df: pd.DataFrame, col: str, k: int = 10, asc: bool = False):
 
 def numeric_columns(df: pd.DataFrame):
     return [c for c in ["calories","sugar_g","carbs_g","fat_g","sat_fat_g","protein_g","sodium_mg","cholesterol_mg","fiber_g","caffeine_mg"] if c in df.columns]
+
+# --- 2. Hàm xuất PDF ---
+def export_insights_pdf(filename, kpis: dict, highlights: list[str]):
+    """
+    Generate a simple PDF report with KPIs + textual highlights.
+    """
+    doc = SimpleDocTemplate(filename, pagesize=A4)
+    styles = getSampleStyleSheet()
+    story = []
+
+    story.append(Paragraph("<b>Starbucks Drinks Nutrition Report</b>", styles["Title"]))
+    story.append(Spacer(1, 12))
+
+    story.append(Paragraph("📊 Key Metrics", styles["Heading2"]))
+    data = [["Metric", "Value"]] + [[k, str(v)] for k,v in kpis.items()]
+    story.append(Table(data, hAlign="LEFT"))
+    story.append(Spacer(1, 12))
+
+    story.append(Paragraph("💡 Highlights", styles["Heading2"]))
+    for h in highlights:
+        story.append(Paragraph("• " + h, styles["Normal"]))
+        story.append(Spacer(1, 6))
+
+    doc.build(story)
+    return filename
+
+# --- 3. Hàm mới cho Machine Learning (Cái bạn cần thêm đây) ---
+def get_clean_data_for_ml(df: pd.DataFrame, target_col: str = "category"):
+    """
+    Hàm chuẩn hóa dữ liệu chuyên biệt cho Machine Learning (KNN/KMeans).
+    1. Lấy các cột số (features).
+    2. Điền giá trị thiếu (NaN) bằng trung vị (median).
+    3. Tách X (features) và y (target).
+    """
+    # 1. Lấy cột số
+    feature_cols = numeric_columns(df)
+    
+    # 2. Xử lý target (y)
+    # Loại bỏ các dòng mà target bị rỗng
+    if target_col in df.columns:
+        df_clean = df.dropna(subset=[target_col]).copy()
+        y = df_clean[target_col]
+    else:
+        df_clean = df.copy()
+        y = None
+        
+    # 3. Xử lý features (X)
+    X = df_clean[feature_cols].copy()
+    
+    # KNN không chạy được nếu có NaN -> Điền bằng median
+    X = X.fillna(X.median())
+    
+    return X, y, feature_cols
